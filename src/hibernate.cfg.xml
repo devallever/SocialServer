@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		
+		<!-- 使用容器连接池链接
+		<property name="hibernate.connection.datasource">java:/comp/env/jdbc/yjDataSource</property> 
+    	<property name="hibernate.dialect">org.hibernate.dialect.SQLServer2008Dialect</property>
+		-->
+
+		<!-- SQL Server 	
+    	<property name="hibernate.connection.url">jdbc:sqlserver://127.0.0.1:1433;</property>
+    	<property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
+    	<property name="hibernate.connection.username">sa</property>
+    	<property name="hibernate.connection.password">12345</property>
+    	<property name="hibernate.dialect">org.hibernate.dialect.SQLServer2005Dialect</property>
+		<property name="hibernate.show_sql">true</property>
+		-->
+
+		<!-- MySQL -->
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306?useUnicode=true&amp;characterEncoding=UTF-8</property> 
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property> 
+		<property name="hibernate.connection.username">root</property> 
+		<property name="hibernate.connection.password">dixm</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property> 
+		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.use_sql_comments">true</property> 
+
+		<property name="hibernate.connection.pool_size">0</property>
+
+		<!-- Use the C3P0 connection pool provider -->
+		<!-- <property name="hibernate.c3p0.min_size">5</property> <property name="hibernate.c3p0.max_size">20</property> 
+			<property name="hibernate.c3p0.timeout">300</property> <property name="hibernate.c3p0.max_statements">50</property> 
+			<property name="hibernate.c3p0.idle_test_period">3000</property> -->
+
+		<!-- Mappings -->
+	    <mapping class="com.social.pojo.TUser" />
+	    <mapping class="com.social.pojo.TNews" />
+	    <mapping class="com.social.pojo.TComment" />
+	    <mapping class="com.social.pojo.TFriend" />
+	    <mapping class="com.social.pojo.TLike" />
+	    <mapping class="com.social.pojo.TNewsImage" />
+	    <mapping class="com.social.pojo.TVersion" />
+	    <mapping class="com.social.pojo.TAd" />
+	    <mapping class="com.social.pojo.TGroup"/>
+	    <mapping class="com.social.pojo.TGroupmember"/>
+	    <mapping class="com.social.pojo.TRecruit"/>
+	    <mapping class="com.social.pojo.TRecruitImage"/>
+	    <mapping class="com.social.pojo.TPost"/>
+	    <mapping class="com.social.pojo.TPhotowall"/>
+	    <mapping class="com.social.pojo.TAddetail"/>
+	    <mapping class="com.social.pojo.TVisiteduser"/>
+	    <mapping class="com.social.pojo.TVisitednews"/>
+	    <mapping class="com.social.pojo.TVip"/>
+	    <mapping class="com.social.pojo.TSign"/>
+	    <mapping class="com.social.pojo.TWithdraw"/>
+	    <mapping class="com.social.pojo.TFriendgroup"/>
+	    <mapping class="com.social.pojo.TRank"/>
+	    <mapping class="com.social.pojo.TFollow"/>
+	    <mapping class="com.social.pojo.TFans"/>
+	    <mapping class="com.social.pojo.TSharerank"/>
+	    <mapping class="com.social.pojo.TWebcollection"/>
+	    <mapping class="com.social.pojo.TAutoreaction"/>
+	    <mapping class="com.social.pojo.TFeedback"/>
+	    <mapping class="com.social.pojo.TRecommend"/>
+	    <mapping class="com.social.pojo.TShare"/>
+	    <mapping class="com.social.pojo.TShuaShua"/>
+	    
+	</session-factory>
+
+</hibernate-configuration>

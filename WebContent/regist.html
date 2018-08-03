@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<script type="text/javascript">
+function check_regist(){
+	if(regist_form.account.value==""){
+		alert("用户名不为空");
+		regist_form.account.focus();
+		return false;
+	}
+	if(regist_form.password.value==""){
+		alert("密码不为空");
+		regist_form.password.focus();
+		return false;
+	}
+	if(regist_form.ensurepassword.value==""){
+		alert("两次密码不一致");
+		regist_form.ensurepassword.focus();
+		return false;
+	}
+	if(regist_form.ensurepassword.value!=regist_form.password.value){
+		alert("两次密码不一致");
+		regist_form.ensurepassword.focus();
+		return false;
+	}
+	if(regist_form.image.value==""){
+		alert("请上传头像:");
+		regist_form.image.focus();
+		return false;
+	}
+}
+</script>
+
+
+<style type="text/css">
+body{
+	margin-top:200px;
+	width: 400px;
+	margin: 0 auto;
+}
+</style>
+<title>注册</title>
+</head>
+<body>
+<div id="regist_div">
+	<form action="/SocialServer/RegistServlet" name="regist_form" method="post" enctype="multipart/form-data" onsubmit="return check_regist()">
+		<table>
+			<tr>
+				<td>*账号:</td>
+				<td><input name="username" type="text" ></td>
+			</tr>
+			<tr>
+				<td>*密码:</td>
+				<td><input name="password" type="password" ></td>
+			</tr>
+			<tr>
+				<td>*确认密码:</td>
+				<td><input name="ensurepassword" type="password"></td>
+			</tr>
+			<tr>
+				<td>姓名:</td>
+				<td><input name="name" type="text" ></td>
+			</tr>
+			<tr>
+				<td>生日:</td>
+				<td><input name="birthday" type="text" ></td>
+			</tr>
+			<tr>
+				<td>电话:</td>
+				<td><input name="phone" type="text" ></td>
+			</tr>
+			<tr>
+				<td>*头像:</td>
+				<td><input name="photo" type="file" ></td>
+			</tr>
+			<tr>
+				<td><input type="submit" value="注册"></td>
+				<td><input type="reset" value="重置"></td>
+			</tr>
+		</table>
+		
+	</form>
+</div>
+</body>
+</html>

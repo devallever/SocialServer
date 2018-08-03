@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<script type="text/javascript">
+function check_regist(){
+// 	IF(REGIST_FORM.ACCOUNT.VALUE==""){
+// 		ALERT("用户名不为空");
+// 		REGIST_FORM.ACCOUNT.FOCUS();
+// 		RETURN FALSE;
+// 	}
+// 	IF(REGIST_FORM.PASSWORD.VALUE==""){
+// 		ALERT("密码不为空");
+// 		REGIST_FORM.PASSWORD.FOCUS();
+// 		RETURN FALSE;
+// 	}
+// 	IF(REGIST_FORM.ENSUREPASSWORD.VALUE==""){
+// 		ALERT("两次密码不一致");
+// 		REGIST_FORM.ENSUREPASSWORD.FOCUS();
+// 		RETURN FALSE;
+// 	}
+// 	IF(REGIST_FORM.ENSUREPASSWORD.VALUE!=REGIST_FORM.PASSWORD.VALUE){
+// 		ALERT("两次密码不一致");
+// 		REGIST_FORM.ENSUREPASSWORD.FOCUS();
+// 		RETURN FALSE;
+// 	}
+// 	IF(REGIST_FORM.IMAGE.VALUE==""){
+// 		ALERT("请上传头像:");
+// 		REGIST_FORM.IMAGE.FOCUS();
+// 		RETURN FALSE;
+// 	}
+}
+</script>
+
+
+<style type="text/css">
+body{
+	margin-top:200px;
+	width: 400px;
+	margin: 0 auto;
+}
+</style>
+<title>发布动态</title>
+</head>
+<body>
+<div id="regist_div">
+	<form action="/SocialServer/AddNewsServlet" name="regist_form" method="post" enctype="multipart/form-data" onsubmit="return check_regist()">
+		<table>
+			<tr>
+				<td>*user_id:</td>
+				<td><input name="user_id" type="text" ></td>
+			</tr>
+			<tr>
+				<td>*content:</td>
+				<td><input name="content" type="password" ></td>
+			</tr>
+			<tr>
+				<td>date</td>
+				<td><input name="date" type="date"></td>
+			</tr>
+			<tr>
+				<td>longitude:</td>
+				<td><input name="longitude" type="text" ></td>
+			</tr>
+			<tr>
+				<td>latitude:</td>
+				<td><input name="latitude" type="text" ></td>
+			</tr>
+			<tr>
+				<td>city:</td>
+				<td><input name="city" type="text" ></td>
+			</tr>
+			<tr>
+				<td>*part1:</td>
+				<td><input name="part1" type="file" ></td>
+			</tr>
+			<tr>
+				<td>*part2:</td>
+				<td><input name="part2" type="file" ></td>
+			</tr>
+			<tr>
+				<td>*part3:</td>
+				<td><input name="part3" type="file" ></td>
+			</tr>
+			<tr>
+				<td>*part4:</td>
+				<td><input name="part4" type="file" ></td>
+			</tr>
+			<tr>
+				<td>*part5:</td>
+				<td><input name="part5" type="file" ></td>
+			</tr>
+			<tr>
+				<td>*part6:</td>
+				<td><input name="part6" type="file" ></td>
+			</tr>
+			<tr>
+				<td><input type="submit" value="发布"></td>
+				<td><input type="reset" value="重置"></td>
+			</tr>
+		</table>
+		
+	</form>
+</div>
+</body>
+</html>
