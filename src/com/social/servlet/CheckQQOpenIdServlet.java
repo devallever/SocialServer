@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.social.bean.QQ;
+import com.social.bean.Response;
 import com.social.dao.UserDAO;
 import com.social.pojo.TUser;
 import com.social.servlet.LikeServlet.Root;
@@ -25,7 +27,7 @@ public class CheckQQOpenIdServlet extends HttpServlet {
 	private String open_id;
 	
 	private PrintWriter pw;
-	private Root root;
+	private Response<QQ> root;
 	
 	private static final long serialVersionUID = 1L;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -36,7 +38,7 @@ public class CheckQQOpenIdServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		pw = response.getWriter();
-		root = new Root();
+		root = new Response<>();
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		
 		//获取参数
@@ -47,11 +49,10 @@ public class CheckQQOpenIdServlet extends HttpServlet {
 		List<TUser> list_tuser;
 		try {
 			list_tuser = dao.getByQuery("qq_open_id = '" + open_id + "'", 0, 0);
-			if(list_tuser.size()>0) root.isExist = 1;
-			else root.isExist = 0;
-			
-			root.success = true;
-			root.message = "";
+			if(list_tuser.size()>0) root.getData().setExist(1);
+			else root.getData().setExist(0);			
+			root.setSuccess(true);
+			root.setMessage("");
 			
 			pw.print(gson.toJson(root));
 			pw.close();
@@ -67,11 +68,11 @@ public class CheckQQOpenIdServlet extends HttpServlet {
 	}
 	
 	
-	private  boolean checkParameter(HttpServletResponse response,String parameterName ,String parameterValue , Root root, PrintWriter pw){
+	private  boolean checkParameter(HttpServletResponse response,String parameterName ,String parameterValue , Response<QQ> root, PrintWriter pw){
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		if (parameterValue == null || parameterValue.length() == 0) {
-			root.success = false;
-			root.message = "没有指定" + parameterName + "参数";
+			root.setSuccess(false);
+			root.setMessage("没有指定" + parameterName + "参数");
 			response.setContentType("text/html;charset=utf-8");
 			try {
 				pw = response.getWriter();
@@ -86,11 +87,4 @@ public class CheckQQOpenIdServlet extends HttpServlet {
 		System.out.println(parameterValue);
 		return true;
 	}
-	
-	class Root{
-		boolean success;
-		String message;
-		int isExist;
-	}
-
 }

@@ -20,7 +20,6 @@ import com.social.dao.RecommendDAO;
 import com.social.dao.UserDAO;
 import com.social.pojo.TRecommend;
 import com.social.pojo.TUser;
-import com.social.servlet.LoginServlet.Root;
 
 /**
  * Servlet implementation class ConnectionServlet
@@ -128,6 +127,7 @@ public class ConnectionServlet extends HttpServlet {
 
 	}
 	
+	@SuppressWarnings("unused")
 	private  boolean checkParameter(HttpServletResponse response,String parameterName ,String parameterValue , Root root, PrintWriter pw){
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		if (parameterValue == null || parameterValue.length() == 0) {
