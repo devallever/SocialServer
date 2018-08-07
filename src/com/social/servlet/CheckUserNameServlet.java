@@ -14,7 +14,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.social.dao.UserDAO;
 import com.social.pojo.TUser;
-import com.social.servlet.CheckQQOpenIdServlet.Root;
 
 /**
  * Servlet implementation class CheckUserNameServlet
