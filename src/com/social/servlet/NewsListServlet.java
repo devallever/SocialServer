@@ -95,7 +95,16 @@ public class NewsListServlet extends HttpServlet {
 				news.news_voice_path = tnews.getAudio_path();
 				
 				String old_date  = format.format(tnews.getDate());
-				news.date = DateTimeUtils.getTime2(old_date, date);
+				
+				
+				Date startDate = tnews.getDate();
+				Date endDate = new Date();
+				
+				String result = DateTimeUtils.getDatePoor(endDate,startDate);
+				System.out.println("result ============================================ "+ result);
+				
+				//news.date = DateTimeUtils.getTime2(old_date, date);
+				news.date = result;
 				
 				NewsImageDAO newsImageDAO = new NewsImageDAO(dao.getSession());
 				List<TNewsImage> list_image;

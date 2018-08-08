@@ -38,6 +38,7 @@ import cn.jpush.api.push.model.notification.Notification;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.social.bean.Response;
 import com.social.dao.UserDAO;
 import com.social.pojo.TUser;
 
@@ -50,7 +51,7 @@ public class PullRefresherServlet extends HttpServlet {
 	
 	private String user_id;
 	private PrintWriter pw;
-	private Root root;
+	private Response<String[]> root;
 	
 	private static final long serialVersionUID = 1L;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -61,14 +62,14 @@ public class PullRefresherServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		pw = response.getWriter();
-		root = new Root();
+		root = new Response<>();
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		
 		HttpSession session = request.getSession();
 		System.out.println(session.getId());
 		if(session == null || session.getAttribute("id") == null){
-			root.message = "未登录";
-			root.success = false;
+			root.setMessage("未登录");
+			root.setSuccess(false);
 			pw.print(gson.toJson(root));
 			pw.close();
 			return;
@@ -84,9 +85,9 @@ public class PullRefresherServlet extends HttpServlet {
 			tuser = dao.getById(Long.parseLong(user_id));
 			
 			if(tuser == null){
-				root.success = true;
-				root.message = "";
-				root.arr_username = null;
+				root.setSuccess(true);
+				root.setMessage("");
+				root.setData(null);
 				
 				pw.print(gson.toJson(root));
 				pw.close();
@@ -134,9 +135,9 @@ public class PullRefresherServlet extends HttpServlet {
 	        }
 			
 			
-			root.success = true;
-			root.message = "";
-			root.arr_username = arr_username;
+			root.setSuccess(true);
+			root.setMessage("");
+			root.setData(arr_nickname);
 			
 			pw.print(gson.toJson(root));
 			pw.close();

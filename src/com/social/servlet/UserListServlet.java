@@ -16,6 +16,8 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.social.bean.Response;
+import com.social.bean.User;
 import com.social.dao.UserDAO;
 import com.social.pojo.TUser;
 import com.social.util.CommonUtils;
@@ -31,7 +33,7 @@ public class UserListServlet extends HttpServlet {
 	private String str_latitude;
 	
 	private PrintWriter pw;
-	private NearbyUserRoot root;
+	private Response<List<User>> root;
 	
 	private String str_page;
 	private int page;
@@ -52,7 +54,7 @@ public class UserListServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		pw = response.getWriter();
-		root = new NearbyUserRoot();
+		root = new Response<>();
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		
 		HttpSession session = request.getSession();
@@ -62,15 +64,6 @@ public class UserListServlet extends HttpServlet {
 //			pw.print(gson.toJson(root));
 //			pw.close();
 //		}
-		
-//		//获取参数
-//		str_longitude = request.getParameter("longitude");
-//		if(!checkParameter(response, "longitude", str_longitude, root, pw)) return;
-//		//longitude = Double.parseDouble(str_latitude);
-//		
-//		str_latitude = request.getParameter("latitude");
-//		if(!checkParameter(response, "latitude", str_latitude, root, pw)) return;
-//		//latitude = Double.parseDouble(str_latitude);
 		
 		selected_sex = request.getParameter("selected_sex"); 
 		if(selected_sex==null) selected_sex = "全部";
@@ -104,50 +97,33 @@ public class UserListServlet extends HttpServlet {
 				list_tuser = dao.getByQuery("age>"+ selected_min_age +" and age<" + selected_max_age + " and sex='" +  selected_sex +"'" + " order by login_time desc", startCount-1, endCount - startCount + 1);
 			}
 			
-//			String id;
-//			String username;
-//			String nickname;
-//			String sex;
-//			double distance;
-//			String user_head_path;
-//			String signature;
-//			int age;
-//			String constellation;
-//			String occupation;
-//			int is_vip;
-//			int video_fee;
-//			int accetp_video;
-//			String login_time;
-			
-			//Date date = new Date();
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-			String date = format.format(new Date());
+			Date endDate = new Date();
 			for(TUser tuser: list_tuser){
 				user = new User();
-				user.id = tuser.getId()+"";
-				user.username = tuser.getUsername();
-				user.nickname = tuser.getNickname();
-				user.sex = tuser.getSex();
-				user.user_head_path = tuser.getHeadpath();
-				user.signature = tuser.getSignature();
-				user.age = tuser.getAge();
-				user.constellation = tuser.getConstellation();
-				user.occupation = tuser.getOccupation();
-				user.is_vip = tuser.getIs_vip();
-				user.video_fee = tuser.getVideo_fee();
-				user.accetp_video = tuser.getAccept_video();
-				
-				//System.out.println("date  = " + date);
-				//System.out.println("tuser.getLogin_time().toString() = " + tuser.getLogin_time().toString());
-				String old_date  = format.format(tuser.getLogin_time());
-				user.login_time = DateTimeUtils.getTime2(old_date, date);
+				user.setId(tuser.getId()+"");
+				user.setUsername(tuser.getUsername());
+				user.setNickname(tuser.getNickname());
+				user.setSex(tuser.getSex());
+				user.setUser_head_path(tuser.getHeadpath());
+				user.setSignature(tuser.getSignature());
+				user.setAge(tuser.getAge());
+				user.setConstellation(tuser.getConstellation());
+				user.setOccupation(tuser.getOccupation());
+				user.setIs_vip(tuser.getIs_vip());
+				user.setVideo_fee(tuser.getVideo_fee());
+				user.setAccetp_video(tuser.getAccept_video());
+				Date startDate = tuser.getLogin_time();
+				String resultTime = DateTimeUtils.getDatePoor(endDate,startDate);
+				user.setLogin_time(resultTime);
 				list_user.add(user);
 			}
 			
-			root.success = true;
-			root.message = "";
-			root.user_list = list_user;
+			root.setSuccess(true);
+			root.setMessage("");
+			root.setData(list_user);
 			dao.close();
+			String rootJson = gson.toJson(root);
+			System.out.println("rootJson =======================  " + rootJson);
 			pw.print(gson.toJson(root));
 			pw.close();
 			
@@ -161,7 +137,7 @@ public class UserListServlet extends HttpServlet {
 		
 	}
 	
-	class NearbyUserRoot{
+/*	class NearbyUserRoot{
 		boolean success;
 		String message;
 		List<User> user_list;
@@ -182,18 +158,17 @@ public class UserListServlet extends HttpServlet {
 		int video_fee;
 		int accetp_video;
 		String login_time;
-	}
+	}*/
 	
-	private  boolean checkParameter(HttpServletResponse response,String parameterName ,String parameterValue , NearbyUserRoot root, PrintWriter pw){
+	private  boolean checkParameter(HttpServletResponse response,String parameterName ,String parameterValue , Response<User> root, PrintWriter pw){
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		if (parameterValue == null || parameterValue.length() == 0) {
-			root.success = false;
-			root.message = "没有指定" + parameterName + "参数";
+			root.setSuccess(false);
+			root.setMessage("没有指定" + parameterName + "参数");
 			response.setContentType("text/html;charset=utf-8");
 			try {
 				pw = response.getWriter();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			pw.print(gson.toJson(root));

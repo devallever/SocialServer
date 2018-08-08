@@ -7,10 +7,44 @@ import java.util.Date;
 import org.joda.time.Interval;
 import org.joda.time.Period;
 
+import com.sun.org.apache.regexp.internal.recompile;
+
+import sun.util.logging.resources.logging;
+
 public class DateTimeUtils {
 	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 	
 	private DateTimeUtils(){}
+	
+	public static String getDatePoor(Date endDate,Date startDate) {
+		 
+	    long nd = 1000 * 24 * 60 * 60;
+	    long nh = 1000 * 60 * 60;
+	    long nm = 1000 * 60;
+	    // long ns = 1000;
+	    // 获得两个时间的毫秒时间差异
+	    long diff = endDate.getTime() - startDate.getTime();
+	    // 计算差多少天
+	    long day = diff / nd;
+	    // 计算差多少小时
+	    long hour = diff % nd / nh;
+	    // 计算差多少分钟
+	    long min = diff % nd % nh / nm;
+	    // 计算差多少秒//输出结果
+	    // long sec = diff % nd % nh % nm / ns;
+	    System.out.println(day + "天" + hour + "小时" + min + "分钟");
+	    
+	    if (day > 0) {
+			return day + "天前";
+		}else if (day <= 0 && hour > 0) {
+			return hour + "小时前";
+		} else if (day <= 0 && hour <= 0 && min > 0){
+			return min + "分钟前";
+		}else {
+			long second = diff / 1000;
+			return second + "秒前";
+		}
+	}
 	
 	public static String getDisplayTime(Date p_date, Date date){
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -118,13 +152,14 @@ public class DateTimeUtils {
 		long from;
 		long to;
 		try {
+			System.out.println("old time = " + old_time);
 			from = simpleDateFormat.parse(old_time).getTime();
 			//System.out.println("获取分钟数：form = " + String.valueOf(from));
 			to = simpleDateFormat.parse(new_time).getTime();  
 			//System.out.println("获取分钟数：form = " + String.valueOf(to));
 			int minutes = (int) ((to - from)/(1000 * 60)); 
 			login_time = minutes + "";
-		} catch (ParseException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}  
@@ -141,7 +176,7 @@ public class DateTimeUtils {
 			to = simpleDateFormat.parse(new_time).getTime();  
 			int hours = (int) ((to - from)/(1000 * 60 * 60)); 
 			login_time = hours + "";
-		} catch (ParseException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}  
